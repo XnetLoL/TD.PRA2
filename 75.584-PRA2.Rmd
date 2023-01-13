@@ -1,9 +1,13 @@
 ---
 title: 'Práctica 2: ¿Cómo realizar la limpieza y análisis de datos?'
 subtitle: 'Tipología y ciclo de vida de los datos'
-author: "Autores: Ouassim Aouattah Akandouch, Juan Andrés"
+author: "Autores: Ouassim Aouattah Akandouch, Juan Andrés Dávila"
 date: "Enero 2023"
 output:
+  pdf_document:
+    highlight: zenburn
+    toc: yes
+  word_document: default
   html_document:
     highlight: default
     number_sections: yes
@@ -12,66 +16,23 @@ output:
     toc_depth: 2
     includes:
       in_header: 75.584-PEC-header.html
-  word_document: default
-  pdf_document:
-    highlight: zenburn
-    toc: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 ```
 ******
-# Introducción
+# 1. Descripción del dataset
 ******
 
-## Descripción del origen del conjunto de datos
+## Descripción del dataset. ¿Por qué es importante y qué pregunta/problema pretende responder?
 
-Este dataset, llamado *Heart Attack Analysis & Prediction Dataset*, contiene información sobre pacientes que han sufrido o podrían sufrir un ataque al corazón. Incluye atributos como la edad y el sexo del paciente, si ha experimentado angina inducida por ejercicio, el número de vasos principales, el tipo de dolor en el pecho, la presión arterial en reposo, el colesterol, los resultados electrocardiográficos en reposo, la frecuencia cardíaca máxima lograda, y si tiene más o menos probabilidades de sufrir un ataque al corazón.
+Este dataset, llamado *Heart Attack Analysis & Prediction Dataset*, contiene información sobre pacientes que han sufrido o podrían sufrir un ataque al corazón. Incluye atributos como la edad y el sexo del paciente, si ha experimentado angina inducida por ejercicio, el número de vasos principales, el tipo de dolor en el pecho, la presión arterial en reposo, el colesterol, los resultados electrocardiográficos en reposo, la frecuencia cardíaca máxima lograda, y finalmente si tiene más o menos probabilidades de sufrir un ataque al corazón.
 
-Este dataset es importante ya que el ataque al corazón es una de las principales causas de mortalidad a nivel mundial. El análisis de estos datos puede ayudar a identificar patrones y factores de riesgo relacionados con los ataques cardíacos, lo que permitiría a los médicos y científicos de la salud tomar medidas preventivas y mejorar los tratamientos. Además, desarrollar modelos de predicción a partir de estos datos podría ayudar a determinar si un paciente está en riesgo de sufrir un ataque al corazón, lo que permitiría una intervención temprana.
+Este dataset es importante ya que el ataque al corazón es una de las principales causas de mortalidad a nivel mundial. El análisis de estos datos puede ayudar a identificar patrones y factores de riesgo relacionados con los ataques cardíacos, lo que permitiría a los médicos y científicos de la salud tomar medidas preventivas y mejorar los tratamientos.Se puede responder preguntas como ¿Qué factor o variables son los de mayor incidencia cuando una persona sufre de un ataque al corazón?o ¿Las mujeres son mas propensas a tener este tipo de enfermedades? ¿es el colesterol un factor determinante para un ataque cardiaco?
 
-## Objetivos
+Revisamos la descripción de las variables contenidas en el fichero y los tipos de cada una y a continuación Construimos un pequeño diccionario de datos utilizando la documentación auxiliar.
 
-Al analizar el dataset "Heart Attack Analysis & Prediction Dataset", se pueden establecer varios objetivos metodológicos:
-
-1. Análisis exploratorio de los datos: estudiar las variables y los patrones de los datos para obtener una comprensión general de los datos y detectar posibles problemas o outliers.
-
-2. Identificar factores de riesgo: utilizar técnicas estadísticas para identificar variables que estén relacionadas con un mayor riesgo de sufrir un ataque al corazón.
-
-3. Desarrollar modelos de predicción: utilizar algoritmos de aprendizaje automático para desarrollar modelos que puedan predecir el riesgo de sufrir un ataque al corazón en base a los datos de los pacientes.
-
-4. Evaluar el rendimiento de los modelos: medir la precisión y el rendimiento de los modelos desarrollados para evaluar su capacidad para predecir el riesgo de sufrir un ataque al corazón.
-
-5. Identificar las variables más importantes: Utilizar técnicas de selección de características para identificar las variables más importantes en la predicción de riesgo de un ataque cardíaco.
-
-6. Utilizar el modelo para la toma de decisiones: Utilizar el modelo generado para la toma de decisiones clínicas y asesoramiento a pacientes.
-
-
-# Análisis exploratorio
-
-Queremos hacer una primera aproximación al conjunto de datos escogido para poder responder a las preguntas más básicas: ¿Cuántos registros tiene? ¿Cuánas variables? ¿De qué tipología son? ¿Como se distibuyen los valores de las variables? ¿Hay problemas con los datos? ¿Se puede intuir el valor analítico de los datos? ¿Qué primeras conclusiones se pueden extraer? 
-
-Empezaremos cargando el fichero de datos.
-
-```{r}
-path = 'heart.csv'
-df <- read.csv(path, row.names=NULL)
-```
-
-## Exploración del conjunto de datos
-
-Verificamos la estructura del juego de datos principal. Mostramos el número de columnas que tenemos y ejemplos de los contenidos de las filas.
-
-```{r}
-structure = str(df)
-```
-
-Vemos que tenemos **14** variables y **303** registros.
-
-Revisamos la descripción de las variables contenidas en el fichero y los tipos de cada una. Construimos un pequeño diccionario de datos utilizando la documentación auxiliar.
-
-**HECHOS A ESTUDIAR**
 
 - `target`: Probabilidades de sufrir un ataque al corazón (0 = menor probabilidad, 1 = mayor probabilidad).
 - `Age`: Edad del paciente (en años).
@@ -81,36 +42,51 @@ Revisamos la descripción de las variables contenidas en el fichero y los tipos 
   - Valor 2: Angina atípica.
   - Valor 3: Dolor no anginal.
   - Valor 4: Asintomático.
-
-**OTRAS VARIABLES**
-
 - `thalach`: Frecuencia cardíaca máxima alcanzada (en latidos por minuto).
 - `Sex`: Sexo del paciente (1 = hombre, 0 = mujer).
 - `exang`: Angina inducida por ejercicio (1 = sí, 0 = no).
-- `ca`: Número de vasos principales (valores posibles: 0-3)
+- `caa`: Número de vasos principales (valores posibles: 0-3)
 - `chol`: Colesterol (en mg/dl) obtenido a través del sensor de índice de masa corporal (IMC).
 - `fbs`: Azúcar en sangre en ayuno > 120 mg/dl (1 = verdadero, 0 = falso).
 - `rest_ecg`: Resultados electrocardiográficos en reposo.
   - Valor 0: Normal.
   - Valor 1: Anormalidades en las ondas ST-T (inversiones de onda T y/o elevación o depresión ST > 0.05 mV).
   - Valor 2: Hipertrofia ventricular izquierda probable o definitiva según los criterios de Estes.
+  
 
-## Limpieza
+# 2. Integración y selección
+
+## Integración y selección de los datos de interés a analizar. Puede ser el resultado de adicionar diferentes datasets o una subselección útil de los datos originales, en base al objetivo que se quiera conseguir.
+
+Como se indicó en el apartado anterior existen muchas variables con las cuales se pueden trabajar para poder realizar un análisis por lo que empezaremos cargando el fichero de datos.
+
+```{r}
+path = 'heart.csv'
+df <- read.csv(path, row.names=NULL)
+```
+  
+Verificamos la estructura del juego de datos principal. Mostramos el número de columnas que tenemos y ejemplos de los contenidos de las filas.
+
+```{r}
+structure = str(df)
+summary(df)
+```
+
+Vemos que tenemos **14** variables y **303** registros.
+
+En este caso podemos deshacernos de variables que no no seran utilizadas para el análisis de esta practica como el azucar en sangre o el numero de vasos princiaples. 
+
+```{r}
+df <- df[,!names(df) %in% c("caa", "fbs", "rest_ecg")]
+summary(df)
+```
+
+# 3. Limpieza de los datos.
+## 3.1. ¿Los datos contienen ceros o elementos vacíos? Gestiona cada uno de estos casos.
 Un paso esencial será la limpieza de datos, mirando si hay valores vacíos o nulos.
 
 ```{r}
-print('NA')
-```
-
-```{r}
 colSums(is.na(df))
-```
-
-```{r}
-print('Blancos')
-```
-
-```{r}
 colSums(df == "")
 ```
 
@@ -119,44 +95,29 @@ Vemos que no hay valores nulos en los datos ni existen campos llenos de espacios
 ```{r}
 df$exng <- factor(df$exng)
 df$cp <- factor(df$cp)
-df$fbs <- factor(df$fbs)
-df$restecg <- factor(df$restecg)
 df$output <- factor(df$output)
+structure = str(df)
 ```
-
+## 3.2. Identifica y gestiona los valores extremos
 A continuación, analizaremos los posibles valores extremos de nuestro juego de datos.
 
 ```{r}
-par(mfrow = c(2,2))
+par(mfrow = c(3,2))
 for(i in 1:ncol(df)) {
- boxplot(df[, i], main = colnames(df)[i])
+ boxplot(df[, i], main = colnames(df)[i],col="blue")
   plot(df[, i])
 }
 ```
 
-## Construcción del conjunto de datos final
+# 4. Análisis de los datos.
+## 4.1. Selección de los grupos de datos que se quieren analizar/comparar (p. ej., si se van a comparar grupos de datos, ¿cuáles son estos grupos y qué tipo de análisis se van a aplicar?)
+## 4.2. Comprobación de la normalidad y homogeneidad de la varianza.
+## 4.3. Aplicación de pruebas estadísticas para comparar los grupos de datos.En función de los datos y el objetivo del estudio, aplicar pruebas de contraste de hipótesis, correlaciones, regresiones, etc. Aplicar al menos tres métodos de análisis diferentes.
+# 5. Representación de los resultados a partir de tablas y gráficas. 
 
-# Correlaciones y distribuciones
+Los resultados graficos se representan en los apartados anteriores.
 
-# Prueba t-Student
-
-## Comprobación de la normalidad y homogeneidad de la varianza
-
-# Regresión logística
-
-## Generación de los conjuntos de entrenamiento y de test
-
-## Estimación del modelo con el conjunto de entrenamiento e interpretación
-
-## Cálculo de las OR (Odds-Ration)
-
-## Matriz de confusión
-
-## Predicción
-
-## Bondad de ajuste
-
-## Curva ROC
+# 6. Resolución del problema. A partir de los resultados obtenidos,
 
 
 # Conclusiones
