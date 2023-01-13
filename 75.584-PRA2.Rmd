@@ -126,10 +126,58 @@ A continuación, analizaremos los posibles valores extremos de nuestro juego de 
 
 ```{r}
 par(mfrow = c(2,2))
-for(i in 1:ncol(df)) {
- boxplot(df[, i], main = colnames(df)[i],col="blue")
-  plot(df[, i], )
-}
+
+boxplot(df$trtbps)
+plot(df$trtbps, )
+
+boxplot(df$chol)
+plot(df$chol, )
+
+boxplot(df$oldpeak)
+plot(df$oldpeak, )
+
+boxplot(df$caa)
+plot(df$caa, )
+```
+
+```{r}
+# Cálculo del rango intercuartil (iqr) para cada variable
+iqr_trtbps <- quantile(df$trtbps, 0.75) - quantile(df$trtbps, 0.25)
+iqr_chol <- quantile(df$chol, 0.75) - quantile(df$chol, 0.25)
+iqr_oldpeak <- quantile(df$oldpeak, 0.75) - quantile(df$oldpeak, 0.25)
+iqr_caa <- quantile(df$caa, 0.75) - quantile(df$caa, 0.25)
+
+# Cálculo de los límites superior e inferior para cada variable
+upper_trtbps <- quantile(df$trtbps, 0.75) + 1.5*iqr_trtbps
+lower_trtbps <- quantile(df$trtbps, 0.25) - 1.5*iqr_trtbps
+upper_chol <- quantile(df$chol, 0.75) + 1.5*iqr_chol
+lower_chol <- quantile(df$chol, 0.25) - 1.5*iqr_chol
+upper_oldpeak <- quantile(df$oldpeak, 0.75) + 1.5*iqr_oldpeak
+lower_oldpeak <- quantile(df$oldpeak, 0.25) - 1.5*iqr_oldpeak
+upper_caa <- quantile(df$caa, 0.75) + 1.5*iqr_caa
+lower_caa <- quantile(df$caa, 0.25) - 1.5*iqr_caa
+
+# Eliminar los valores atípicos
+df <- df[df$trtbps <= upper_trtbps & df$trtbps >= lower_trtbps,]
+df <- df[df$chol <= upper_chol & df$chol >= lower_chol,]
+df <- df[df$oldpeak <= upper_oldpeak & df$oldpeak >= lower_oldpeak,]
+df <- df[df$caa <= upper_caa & df$caa >= lower_caa,]
+```
+
+```{r}
+par(mfrow = c(2,2))
+
+boxplot(df$trtbps)
+plot(df$trtbps, )
+
+boxplot(df$chol)
+plot(df$chol, )
+
+boxplot(df$oldpeak)
+plot(df$oldpeak, )
+
+boxplot(df$caa)
+plot(df$caa, )
 ```
 
 ******
@@ -168,6 +216,18 @@ A través de un gráfico de densidad podemos ver la distribución de valores par
 ## Aplicación de pruebas estadísticas para comparar los grupos de datos.
 
 ### Correlaciones
+
+La librería PerformanceAnalytics en R incluye una función llamada chart.Correlation, la cual permite generar un gráfico de relación entre variables con elementos como histogramas, funciones de densidad, líneas de regresión suavizadas y coeficientes de correlación con indicadores de significancia estadística (representado por estrellas, donde ausencia de estrellas indica que la variable no es estadísticamente significativa, mientras que una, dos y tres estrellas indican significancia estadística al nivel del 10%, 5% y 1%, respectivamente).
+
+```{r}
+if(!require("PerformanceAnalytics")) install.packages("PerformanceAnalytics"); library(PerformanceAnalytics)
+
+df_num <- df[,sapply(df,is.numeric)]
+df_num <- df_num[complete.cases(df_num),]
+chart.Correlation(df_num, histogram = TRUE, method = "pearson")
+
+```
+
 
 ### Prueba t-Student
 
@@ -209,9 +269,9 @@ summary(log_model)
 
 Los puntos clave de los resultados de una regresión logística son los coeficientes de regresión, los valores de p y las medidas de ajuste del modelo.
 
-1. Los coeficientes de regresión: Estos indican la dirección y magnitud de la relación entre cada variable independiente y la variable dependiente. Un coeficiente positivo indica una relación positiva entre la variable independiente y la variable dependiente, mientras que un coeficiente negativo indica una relación negativa. En este caso, un ejemplo de esto es que `cpNon-anginal pain` tiene un coeficiente positivo de 1.621441 y significativamente alto, esto indica que tiene una relación positiva con la probabilidad de sufrir un ataque cardíaco.
+1. Los coeficientes de regresión: Estos indican la dirección y magnitud de la relación entre cada variable independiente y la variable dependiente. Un coeficiente positivo indica una relación positiva entre la variable independiente y la variable dependiente, mientras que un coeficiente negativo indica una relación negativa. En este caso, un ejemplo de esto es que `cpNon-anginal pain` tiene un coeficiente positivo de 1.799 y significativamente alto, esto indica que tiene una relación positiva con la probabilidad de sufrir un ataque cardíaco.
 
-2. Los valores de p: Estos indican la probabilidad de que el coeficiente de regresión sea cero (es decir, que no haya relación entre la variable independiente y la variable dependiente). Un valor de p menor que el nivel de significación establecido (generalmente 0.05) indica que es poco probable que el coeficiente sea cero y, por lo tanto, que hay una relación estadísticamente significativa entre la variable independiente y la variable dependiente. En este caso, por ejemplo, el valor de p de 'cpNon-anginal pain' es muy bajo, es decir, 0.00145, lo que indica que es muy probable que exista una relación entre 'cpNon-anginal pain' y la probabilidad de sufrir un ataque cardíaco.
+2. Los valores de p: Estos indican la probabilidad de que el coeficiente de regresión sea cero (es decir, que no haya relación entre la variable independiente y la variable dependiente). Un valor de p menor que el nivel de significación establecido (generalmente 0.05) indica que es poco probable que el coeficiente sea cero y, por lo tanto, que hay una relación estadísticamente significativa entre la variable independiente y la variable dependiente. En este caso, por ejemplo, el valor de p de 'cpNon-anginal pain' es muy bajo, es decir, 0.00280, lo que indica que es muy probable que exista una relación entre 'cpNon-anginal pain' y la probabilidad de sufrir un ataque cardíaco.
 
 3. Medidas de ajuste del modelo: Estas medidas indican cómo bien el modelo se ajusta a los datos. La desviación residual y el AIC son dos medidas que nos indican qué tan bien se ajusta un modelo a los datos. Una desviación residual y AIC bajos indican que el modelo tiene un mejor ajuste. 
 
@@ -253,7 +313,7 @@ risk_factors <- exp(coefs)
 risk_factors
 ```
 
-En el caso observado, se puede ver que la OR para la variable `cpAtypical Angina` es de 4.41, lo que significa que tener angina atípica tiene 4.41 veces más probabilidades de tener un ataque cardíaco en comparación con tener dolor no anginal.
+En el caso observado, se puede ver que la OR para la variable `cpNon-anginal pain` es de 6.05, lo que significa que tener angina atípica tiene 6.05 veces más probabilidades de tener un ataque cardíaco en comparación con tener una angina típica.
 
 #### Matriz de confusión
 
@@ -301,7 +361,7 @@ prediction_pacients <- predict(log_model, pacients, interval = "confidence", typ
 prediction_pacients
 ```
 
-En el caso del paciente 12, la probabilidad de tener un ataque cardíaco es de 0.9783256 o 97.83%. Esto significa que según el modelo, hay un 97.83% de posibilidades de que ese paciente sufra un ataque cardíaco. En el caso del paciente 200, la probabilidad es de 0.3654041 o 36.54%. Esto significa que según el modelo, hay un 36.54% de posibilidades de que ese paciente sufra un ataque cardíaco.
+En el caso del paciente 12, la probabilidad de tener un ataque cardíaco es de 0.925 o 92.5%. Esto significa que según el modelo, hay un 92.5% de posibilidades de que ese paciente sufra un ataque cardíaco. En el caso del paciente 200, la probabilidad es de 0.019 o 2%. Esto significa que según el modelo, hay un 2% de posibilidades de que ese paciente sufra un ataque cardíaco.
 
 Estas probabilidades no deben interpretarse como una predicción absoluta, sino como una herramienta para identificar pacientes con un mayor riesgo de sufrir un ataque cardíaco y tomar medidas preventivas.
 
@@ -349,7 +409,7 @@ print(paste("Área debajo de la curva:", area_under_curve))
 
 El área debajo de la curva (AUC) es una medida de la eficacia del modelo de regresión logística log_model para predecir la variable dependiente `output`. Un AUC de 1 indica un modelo perfecto, mientras que un AUC de 0.5 indica un modelo no mejor que el azar.
 
-En este caso, el área debajo de la curva es de 0.9129, lo que indica que el modelo **log_model** es muy eficaz para predecir la variable dependiente `output`. Este resultado es consistente con los resultados de las medidas de sensibilidad y especifidad que obtuvimos anteriormente.
+En este caso, el área debajo de la curva nos indica que el modelo **log_model** es muy eficaz para predecir la variable dependiente `output`. Este resultado es consistente con los resultados de las medidas de sensibilidad y especifidad que obtuvimos anteriormente.
 
 # 5. Representación de los resultados a partir de tablas y gráficas. 
 
@@ -360,11 +420,15 @@ Los resultados graficos se representan en los apartados anteriores.
 
 # Conclusiones
 
-Este dataset contiene información sobre pacientes que han tenido o podrían tener ataques al corazón. Los atributos incluyen la edad y el sexo del paciente, si el paciente ha experimentado angina inducida por ejercicio (exang), el número de vasos principales (ca), el tipo de dolor en el pecho (cp), la presión arterial en reposo (trtbps), el colesterol (chol), si el paciente tiene niveles elevados de azúcar en sangre en ayuno (fbs), los resultados electrocardiográficos en reposo (rest_ecg), la frecuencia cardíaca máxima lograda (thalach), y si el paciente tiene más o menos probabilidades de sufrir un ataque al corazón (target). Los valores para los atributos incluyen información como la edad y el sexo del paciente, y variables categóricas como el tipo de dolor en el pecho, los resultados electrocardiográficos y si el paciente tiene más o menos probabilidades de sufrir un ataque al corazón.
+En resumen, el análisis realizado en este dataset se enfocó en el diagnóstico de un ataque cardíaco, utilizando una variedad de variables, incluyendo edad, sexo, tipo de dolor en el pecho, presión arterial, colesterol, glicemia, resultados de electrocardiografía, ritmo cardíaco máximo, entre otros.
 
-Revisados los datos parecen bien informados. Los datos están limpios y bien documentados. No plantean graves problemas de campos con valores nulos o vacíos y tienen bastante potencial para generar nuevos indicadores a partir de los datos.
+Para empezar, se realizó un análisis exploratorio de los datos, que permitió entender mejor la distribución de las variables y detectar posibles valores atípicos. Seguidamente, se aplicaron diferentes técnicas estadísticas para analizar los datos, como análisis de correlación, regresión logística, curva ROC y VIF.
 
-Pretendiamos analizar patrones y factores de riesgo relacionados con los ataques cardíacos, y para desarrollar modelos de predicción para determinar si un paciente está en riesgo de sufrir un ataque al corazón.
+En cuanto a los resultados obtenidos, se pudo observar que algunas variables como el sexo, el tipo de dolor en el pecho, la presión arterial, el ritmo cardíaco máximo y el número de vasos principales tienen una relación significativa con el diagnóstico de un ataque cardíaco. También se observó que algunas variables no tienen una relación significativa con el diagnóstico, como la glicemia y los resultados de electrocardiografía.
+
+Por otro lado, el modelo de regresión logística proporcionó resultados precisos para la predicción del diagnóstico, como se pudo observar en la curva ROC. Sin embargo, se recomendaría eliminar algunas variables poco significativas antes de aplicar el modelo para mejorar la precisión.
+
+En conclusión, el análisis realizado en este dataset proporciona una comprensión valiosa sobre los factores que contribuyen al diagnóstico de un ataque cardíaco, y puede ser utilizado para desarrollar un sistema de diagnóstico automatizado o mejorar el proceso de diagnóstico actual. Sin embargo, sería recomendable realizar más investigaciones con conjuntos de datos más grandes y variados para validar estos resultados.
 
 # Bibliografía
 
