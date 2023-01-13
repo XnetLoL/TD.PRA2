@@ -15,3 +15,7 @@
  - `heart.csv`: conjunto de datos usados en el análisis.
  - `PRA2_Juan Dávila-Ouassim Aouattah.pdf`: documento final.
  - `PRA2.rmd`: código R de la práctica.
+ 
+ ## Enlace al video:
+ 
+https://drive.google.com/file/d/1NNcMX8hSdNDo_SEJ0_kgG0_50i5jqRWp/view?usp=sharing![image](https://user-images.githubusercontent.com/19257613/212420182-9fa1619a-3c66-4883-a8c4-a3d3df516afd.png)
