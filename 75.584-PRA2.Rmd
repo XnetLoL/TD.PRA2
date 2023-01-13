@@ -21,6 +21,17 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 ```
+
+```{r load_libraries, include=FALSE}
+library(stringr)
+library(ggplot2)
+library(dplyr)
+library(grid)
+library(gridExtra)
+library(ggpubr)
+library(nortest)
+```
+
 ******
 # 1. Descripción del dataset
 ******
@@ -29,7 +40,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 Este dataset, llamado *Heart Attack Analysis & Prediction Dataset*, contiene información sobre pacientes que han sufrido o podrían sufrir un ataque al corazón. Incluye atributos como la edad y el sexo del paciente, si ha experimentado angina inducida por ejercicio, el número de vasos principales, el tipo de dolor en el pecho, la presión arterial en reposo, el colesterol, los resultados electrocardiográficos en reposo, la frecuencia cardíaca máxima lograda, y finalmente si tiene más o menos probabilidades de sufrir un ataque al corazón.
 
-Este dataset es importante ya que el ataque al corazón es una de las principales causas de mortalidad a nivel mundial. El análisis de estos datos puede ayudar a identificar patrones y factores de riesgo relacionados con los ataques cardíacos, lo que permitiría a los médicos y científicos de la salud tomar medidas preventivas y mejorar los tratamientos.Se puede responder preguntas como ¿Qué factor o variables son los de mayor incidencia cuando una persona sufre de un ataque al corazón?o ¿Las mujeres son mas propensas a tener este tipo de enfermedades? ¿es el colesterol un factor determinante para un ataque cardiaco?
+Este dataset es importante ya que el ataque al corazón es una de las principales causas de mortalidad a nivel mundial. El análisis de estos datos puede ayudar a identificar patrones y factores de riesgo relacionados con los ataques cardíacos, lo que permitiría a los médicos y científicos de la salud tomar medidas preventivas y mejorar los tratamientos.Se puede responder preguntas como ¿Qué factor o variables son los de mayor incidencia cuando una persona sufre de un ataque al corazón?o ¿Las mujeres son mas propensas a tener este tipo de enfermedades? ¿es el colesterol un factor más determinante para un ataque cardiaco que la edad de la persona?
 
 Revisamos la descripción de las variables contenidas en el fichero y los tipos de cada una y a continuación Construimos un pequeño diccionario de datos utilizando la documentación auxiliar.
 
@@ -111,8 +122,54 @@ for(i in 1:ncol(df)) {
 
 # 4. Análisis de los datos.
 ## 4.1. Selección de los grupos de datos que se quieren analizar/comparar (p. ej., si se van a comparar grupos de datos, ¿cuáles son estos grupos y qué tipo de análisis se van a aplicar?)
+
+Como primer punto  a analizar vamos a verificar si el nivel de colesterol medido en miligramos por decilitro mg/dl tiene una relacion más directa que la edad con la probabilidad de sufrir un ataque cardiaco que la 
+Para ellos creamos un nuevo dataset con estas dos variables.
+
+```{r}
+test <- df[,names(df) %in% c("chol", "output","age")]
+structure= str(test)
+```
+
 ## 4.2. Comprobación de la normalidad y homogeneidad de la varianza.
+En cuanto al primer dataset creado vamos a comprobar la normalidad  la variable col
+```{r}
+grid.arrange((ggdensity(test$chol, fill = "lightgreen")),ncol=1)
+grid.arrange((ggdensity(test$age, fill = "lightgreen")),ncol=1)
+```
+A través de un gráfico de densidad podemos ver la distribución de valores para la variable peso y demostrar que toma la forma de campana esperada que indica normalidad.
+```{r}
+
+```
 ## 4.3. Aplicación de pruebas estadísticas para comparar los grupos de datos.En función de los datos y el objetivo del estudio, aplicar pruebas de contraste de hipótesis, correlaciones, regresiones, etc. Aplicar al menos tres métodos de análisis diferentes.
+Utilizamos un modelo de regresión logistica en este caso
+
+```{r}
+modeloRL <- glm(output ~ chol, data = test, family = "binomial")
+summary(modeloRL)
+plot(output ~ chol, test, col = "darkblue",
+     main = "Modelo regresión logística",
+     ylab = "P(output=1|colesterol)",
+     xlab = "colesterol", pch = "I")
+
+# type = "response" devuelve las predicciones en forma de probabilidad en lugar de en log_ODDs
+curve(predict(modeloRL, data.frame(chol = x), type = "response"),
+      col = "firebrick", lwd = 2.5, add = TRUE)
+
+
+modeloRL <- glm(output ~ age, data = test, family = "binomial")
+summary(modeloRL)
+plot(output ~ age, test, col = "darkblue",
+     main = "Modelo regresión logística",
+     ylab = "P(output=1|colesterol)",
+     xlab = "age", pch = "I")
+
+# type = "response" devuelve las predicciones en forma de probabilidad en lugar de en log_ODDs
+curve(predict(modeloRL, data.frame(age = x), type = "response"),
+      col = "firebrick", lwd = 2.5, add = TRUE)
+
+```
+
 # 5. Representación de los resultados a partir de tablas y gráficas. 
 
 Los resultados graficos se representan en los apartados anteriores.
