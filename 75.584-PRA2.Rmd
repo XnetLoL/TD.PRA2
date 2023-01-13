@@ -243,6 +243,8 @@ Generaremos los conjuntos de datos para entrenar el modelo (training) y para tes
 ```{r}
 if(!require("caret")) install.packages("caret"); library(caret)
 
+set.seed(888)
+
 # Crear partición de los datos
 partition <- createDataPartition(df$output, p = 0.8, list = FALSE)
 
@@ -269,9 +271,9 @@ summary(log_model)
 
 Los puntos clave de los resultados de una regresión logística son los coeficientes de regresión, los valores de p y las medidas de ajuste del modelo.
 
-1. Los coeficientes de regresión: Estos indican la dirección y magnitud de la relación entre cada variable independiente y la variable dependiente. Un coeficiente positivo indica una relación positiva entre la variable independiente y la variable dependiente, mientras que un coeficiente negativo indica una relación negativa. En este caso, un ejemplo de esto es que `cpNon-anginal pain` tiene un coeficiente positivo de 1.799 y significativamente alto, esto indica que tiene una relación positiva con la probabilidad de sufrir un ataque cardíaco.
+1. Los coeficientes de regresión: Estos indican la dirección y magnitud de la relación entre cada variable independiente y la variable dependiente. Un coeficiente positivo indica una relación positiva entre la variable independiente y la variable dependiente, mientras que un coeficiente negativo indica una relación negativa. En este caso, un ejemplo de esto es que `cpNon-anginal pain` tiene un coeficiente positivo de 2.289 y significativamente alto, esto indica que tiene una relación positiva con la probabilidad de sufrir un ataque cardíaco.
 
-2. Los valores de p: Estos indican la probabilidad de que el coeficiente de regresión sea cero (es decir, que no haya relación entre la variable independiente y la variable dependiente). Un valor de p menor que el nivel de significación establecido (generalmente 0.05) indica que es poco probable que el coeficiente sea cero y, por lo tanto, que hay una relación estadísticamente significativa entre la variable independiente y la variable dependiente. En este caso, por ejemplo, el valor de p de 'cpNon-anginal pain' es muy bajo, es decir, 0.00280, lo que indica que es muy probable que exista una relación entre 'cpNon-anginal pain' y la probabilidad de sufrir un ataque cardíaco.
+2. Los valores de p: Estos indican la probabilidad de que el coeficiente de regresión sea cero (es decir, que no haya relación entre la variable independiente y la variable dependiente). Un valor de p menor que el nivel de significación establecido (generalmente 0.05) indica que es poco probable que el coeficiente sea cero y, por lo tanto, que hay una relación estadísticamente significativa entre la variable independiente y la variable dependiente. En este caso, por ejemplo, el valor de p de 'cpNon-anginal pain' es muy bajo, es decir, 0.000651, lo que indica que es muy probable que exista una relación entre 'cpNon-anginal pain' y la probabilidad de sufrir un ataque cardíaco.
 
 3. Medidas de ajuste del modelo: Estas medidas indican cómo bien el modelo se ajusta a los datos. La desviación residual y el AIC son dos medidas que nos indican qué tan bien se ajusta un modelo a los datos. Una desviación residual y AIC bajos indican que el modelo tiene un mejor ajuste. 
 
@@ -313,7 +315,7 @@ risk_factors <- exp(coefs)
 risk_factors
 ```
 
-En el caso observado, se puede ver que la OR para la variable `cpNon-anginal pain` es de 6.05, lo que significa que tener angina atípica tiene 6.05 veces más probabilidades de tener un ataque cardíaco en comparación con tener una angina típica.
+En el caso observado, se puede ver que la OR para la variable `cpNon-anginal pain` es de 10.94, lo que significa que tener angina atípica tiene 10.94 veces más probabilidades de tener un ataque cardíaco en comparación con tener una angina típica.
 
 #### Matriz de confusión
 
@@ -339,7 +341,7 @@ sensitivity(confusion_matrix)
 specificity(confusion_matrix)
 ```
 
-Los resultados indican que el modelo de regresión logística tiene una tasa de aciertos del 85%. Esto quiere decir que, de las predicciones del modelo, el 85% son correctas.
+Los resultados indican que el modelo de regresión logística tiene una tasa de aciertos del 87%. Esto quiere decir que, de las predicciones del modelo, el 87% son correctas.
 
 Para entender mejor estos resultados, podemos observar la tabla de contingencia que se ha obtenido al comparar la variable prediction con la variable dependiente (output) del conjunto de prueba. Esta tabla nos muestra el número de veces que se ha dado cada combinación de valores en ambas variables.
 
@@ -361,7 +363,7 @@ prediction_pacients <- predict(log_model, pacients, interval = "confidence", typ
 prediction_pacients
 ```
 
-En el caso del paciente 12, la probabilidad de tener un ataque cardíaco es de 0.925 o 92.5%. Esto significa que según el modelo, hay un 92.5% de posibilidades de que ese paciente sufra un ataque cardíaco. En el caso del paciente 200, la probabilidad es de 0.019 o 2%. Esto significa que según el modelo, hay un 2% de posibilidades de que ese paciente sufra un ataque cardíaco.
+En el caso del paciente 12, la probabilidad de tener un ataque cardíaco es de 0.917 o 91.7%. Esto significa que según el modelo, hay un 92.5% de posibilidades de que ese paciente sufra un ataque cardíaco. En el caso del paciente 200, la probabilidad es de 0.011 o 1%. Esto significa que según el modelo, hay un 1% de posibilidades de que ese paciente sufra un ataque cardíaco.
 
 Estas probabilidades no deben interpretarse como una predicción absoluta, sino como una herramienta para identificar pacientes con un mayor riesgo de sufrir un ataque cardíaco y tomar medidas preventivas.
 
