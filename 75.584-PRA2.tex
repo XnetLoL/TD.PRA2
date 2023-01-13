@@ -1,0 +1,636 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{48,48,48}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.81,0.69}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{\textbf{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.94,0.87,0.69}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.87,0.87,0.75}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.86,0.86,0.80}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.76,0.75,0.62}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.75,0.75,0.82}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.94,0.94,0.56}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.94,0.87,0.69}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.94,0.94,0.82}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.94,0.94,0.56}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{1.00,0.81,0.69}{\textbf{#1}}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Práctica 2: ¿Cómo realizar la limpieza y análisis de datos?},
+  pdfauthor={Autores: Ouassim Aouattah Akandouch, Juan Andrés Dávila},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Práctica 2: ¿Cómo realizar la limpieza y análisis de datos?}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Tipología y ciclo de vida de los datos}
+\author{Autores: Ouassim Aouattah Akandouch, Juan Andrés Dávila}
+\date{Enero 2023}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{descripciuxf3n-del-dataset}{%
+\section{1. Descripción del dataset}\label{descripciuxf3n-del-dataset}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{descripciuxf3n-del-dataset.-por-quuxe9-es-importante-y-quuxe9-preguntaproblema-pretende-responder}{%
+\subsection{Descripción del dataset. ¿Por qué es importante y qué
+pregunta/problema pretende
+responder?}\label{descripciuxf3n-del-dataset.-por-quuxe9-es-importante-y-quuxe9-preguntaproblema-pretende-responder}}
+
+Este dataset, llamado \emph{Heart Attack Analysis \& Prediction
+Dataset}, contiene información sobre pacientes que han sufrido o podrían
+sufrir un ataque al corazón. Incluye atributos como la edad y el sexo
+del paciente, si ha experimentado angina inducida por ejercicio, el
+número de vasos principales, el tipo de dolor en el pecho, la presión
+arterial en reposo, el colesterol, los resultados electrocardiográficos
+en reposo, la frecuencia cardíaca máxima lograda, y finalmente si tiene
+más o menos probabilidades de sufrir un ataque al corazón.
+
+Este dataset es importante ya que el ataque al corazón es una de las
+principales causas de mortalidad a nivel mundial. El análisis de estos
+datos puede ayudar a identificar patrones y factores de riesgo
+relacionados con los ataques cardíacos, lo que permitiría a los médicos
+y científicos de la salud tomar medidas preventivas y mejorar los
+tratamientos.Se puede responder preguntas como ¿Qué factor o variables
+son los de mayor incidencia cuando una persona sufre de un ataque al
+corazón?o ¿Las mujeres son mas propensas a tener este tipo de
+enfermedades? ¿es el colesterol un factor más determinante para un
+ataque cardiaco que la edad de la persona?
+
+Revisamos la descripción de las variables contenidas en el fichero y los
+tipos de cada una y a continuación Construimos un pequeño diccionario de
+datos utilizando la documentación auxiliar.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{target}: Probabilidades de sufrir un ataque al corazón (0 =
+  menor probabilidad, 1 = mayor probabilidad).
+\item
+  \texttt{Age}: Edad del paciente (en años).
+\item
+  \texttt{trtbps}: Presión arterial en reposo (en mm Hg).
+\item
+  \texttt{cp}: Tipo de dolor en el pecho.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Valor 1: Angina típica.
+  \item
+    Valor 2: Angina atípica.
+  \item
+    Valor 3: Dolor no anginal.
+  \item
+    Valor 4: Asintomático.
+  \end{itemize}
+\item
+  \texttt{thalach}: Frecuencia cardíaca máxima alcanzada (en latidos por
+  minuto).
+\item
+  \texttt{Sex}: Sexo del paciente (1 = hombre, 0 = mujer).
+\item
+  \texttt{exang}: Angina inducida por ejercicio (1 = sí, 0 = no).
+\item
+  \texttt{caa}: Número de vasos principales (valores posibles: 0-3)
+\item
+  \texttt{chol}: Colesterol (en mg/dl) obtenido a través del sensor de
+  índice de masa corporal (IMC).
+\item
+  \texttt{fbs}: Azúcar en sangre en ayuno \textgreater{} 120 mg/dl (1 =
+  verdadero, 0 = falso).
+\item
+  \texttt{rest\_ecg}: Resultados electrocardiográficos en reposo.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Valor 0: Normal.
+  \item
+    Valor 1: Anormalidades en las ondas ST-T (inversiones de onda T y/o
+    elevación o depresión ST \textgreater{} 0.05 mV).
+  \item
+    Valor 2: Hipertrofia ventricular izquierda probable o definitiva
+    según los criterios de Estes.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{integraciuxf3n-y-selecciuxf3n}{%
+\section{2. Integración y
+selección}\label{integraciuxf3n-y-selecciuxf3n}}
+
+\hypertarget{integraciuxf3n-y-selecciuxf3n-de-los-datos-de-interuxe9s-a-analizar.-puede-ser-el-resultado-de-adicionar-diferentes-datasets-o-una-subselecciuxf3n-uxfatil-de-los-datos-originales-en-base-al-objetivo-que-se-quiera-conseguir.}{%
+\subsection{Integración y selección de los datos de interés a analizar.
+Puede ser el resultado de adicionar diferentes datasets o una
+subselección útil de los datos originales, en base al objetivo que se
+quiera
+conseguir.}\label{integraciuxf3n-y-selecciuxf3n-de-los-datos-de-interuxe9s-a-analizar.-puede-ser-el-resultado-de-adicionar-diferentes-datasets-o-una-subselecciuxf3n-uxfatil-de-los-datos-originales-en-base-al-objetivo-que-se-quiera-conseguir.}}
+
+Como se indicó en el apartado anterior existen muchas variables con las
+cuales se pueden trabajar para poder realizar un análisis por lo que
+empezaremos cargando el fichero de datos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{path }\OtherTok{=} \StringTok{\textquotesingle{}heart.csv\textquotesingle{}}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(path, }\AttributeTok{row.names=}\ConstantTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Verificamos la estructura del juego de datos principal. Mostramos el
+número de columnas que tenemos y ejemplos de los contenidos de las
+filas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{structure }\OtherTok{=} \FunctionTok{str}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    303 obs. of  14 variables:
+##  $ age     : int  63 37 41 56 57 57 56 44 52 57 ...
+##  $ sex     : int  1 1 0 1 0 1 0 1 1 1 ...
+##  $ cp      : int  3 2 1 1 0 0 1 1 2 2 ...
+##  $ trtbps  : int  145 130 130 120 120 140 140 120 172 150 ...
+##  $ chol    : int  233 250 204 236 354 192 294 263 199 168 ...
+##  $ fbs     : int  1 0 0 0 0 0 0 0 1 0 ...
+##  $ restecg : int  0 1 0 1 1 1 0 1 1 1 ...
+##  $ thalachh: int  150 187 172 178 163 148 153 173 162 174 ...
+##  $ exng    : int  0 0 0 0 1 0 0 0 0 0 ...
+##  $ oldpeak : num  2.3 3.5 1.4 0.8 0.6 0.4 1.3 0 0.5 1.6 ...
+##  $ slp     : int  0 0 2 2 2 1 1 2 2 2 ...
+##  $ caa     : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ thall   : int  1 2 2 2 2 1 2 3 3 2 ...
+##  $ output  : int  1 1 1 1 1 1 1 1 1 1 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       age             sex               cp            trtbps     
+##  Min.   :29.00   Min.   :0.0000   Min.   :0.000   Min.   : 94.0  
+##  1st Qu.:47.50   1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:120.0  
+##  Median :55.00   Median :1.0000   Median :1.000   Median :130.0  
+##  Mean   :54.37   Mean   :0.6832   Mean   :0.967   Mean   :131.6  
+##  3rd Qu.:61.00   3rd Qu.:1.0000   3rd Qu.:2.000   3rd Qu.:140.0  
+##  Max.   :77.00   Max.   :1.0000   Max.   :3.000   Max.   :200.0  
+##       chol            fbs            restecg          thalachh    
+##  Min.   :126.0   Min.   :0.0000   Min.   :0.0000   Min.   : 71.0  
+##  1st Qu.:211.0   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:133.5  
+##  Median :240.0   Median :0.0000   Median :1.0000   Median :153.0  
+##  Mean   :246.3   Mean   :0.1485   Mean   :0.5281   Mean   :149.6  
+##  3rd Qu.:274.5   3rd Qu.:0.0000   3rd Qu.:1.0000   3rd Qu.:166.0  
+##  Max.   :564.0   Max.   :1.0000   Max.   :2.0000   Max.   :202.0  
+##       exng           oldpeak          slp             caa        
+##  Min.   :0.0000   Min.   :0.00   Min.   :0.000   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.00   1st Qu.:1.000   1st Qu.:0.0000  
+##  Median :0.0000   Median :0.80   Median :1.000   Median :0.0000  
+##  Mean   :0.3267   Mean   :1.04   Mean   :1.399   Mean   :0.7294  
+##  3rd Qu.:1.0000   3rd Qu.:1.60   3rd Qu.:2.000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :6.20   Max.   :2.000   Max.   :4.0000  
+##      thall           output      
+##  Min.   :0.000   Min.   :0.0000  
+##  1st Qu.:2.000   1st Qu.:0.0000  
+##  Median :2.000   Median :1.0000  
+##  Mean   :2.314   Mean   :0.5446  
+##  3rd Qu.:3.000   3rd Qu.:1.0000  
+##  Max.   :3.000   Max.   :1.0000
+\end{verbatim}
+
+Vemos que tenemos \textbf{14} variables y \textbf{303} registros.
+
+En este caso podemos deshacernos de variables que no no seran utilizadas
+para el análisis de esta practica como el azucar en sangre o el numero
+de vasos princiaples.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df[,}\SpecialCharTok{!}\FunctionTok{names}\NormalTok{(df) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"caa"}\NormalTok{, }\StringTok{"fbs"}\NormalTok{, }\StringTok{"rest\_ecg"}\NormalTok{)]}
+\FunctionTok{summary}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       age             sex               cp            trtbps     
+##  Min.   :29.00   Min.   :0.0000   Min.   :0.000   Min.   : 94.0  
+##  1st Qu.:47.50   1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:120.0  
+##  Median :55.00   Median :1.0000   Median :1.000   Median :130.0  
+##  Mean   :54.37   Mean   :0.6832   Mean   :0.967   Mean   :131.6  
+##  3rd Qu.:61.00   3rd Qu.:1.0000   3rd Qu.:2.000   3rd Qu.:140.0  
+##  Max.   :77.00   Max.   :1.0000   Max.   :3.000   Max.   :200.0  
+##       chol          restecg          thalachh          exng       
+##  Min.   :126.0   Min.   :0.0000   Min.   : 71.0   Min.   :0.0000  
+##  1st Qu.:211.0   1st Qu.:0.0000   1st Qu.:133.5   1st Qu.:0.0000  
+##  Median :240.0   Median :1.0000   Median :153.0   Median :0.0000  
+##  Mean   :246.3   Mean   :0.5281   Mean   :149.6   Mean   :0.3267  
+##  3rd Qu.:274.5   3rd Qu.:1.0000   3rd Qu.:166.0   3rd Qu.:1.0000  
+##  Max.   :564.0   Max.   :2.0000   Max.   :202.0   Max.   :1.0000  
+##     oldpeak          slp            thall           output      
+##  Min.   :0.00   Min.   :0.000   Min.   :0.000   Min.   :0.0000  
+##  1st Qu.:0.00   1st Qu.:1.000   1st Qu.:2.000   1st Qu.:0.0000  
+##  Median :0.80   Median :1.000   Median :2.000   Median :1.0000  
+##  Mean   :1.04   Mean   :1.399   Mean   :2.314   Mean   :0.5446  
+##  3rd Qu.:1.60   3rd Qu.:2.000   3rd Qu.:3.000   3rd Qu.:1.0000  
+##  Max.   :6.20   Max.   :2.000   Max.   :3.000   Max.   :1.0000
+\end{verbatim}
+
+\hypertarget{limpieza-de-los-datos.}{%
+\section{3. Limpieza de los datos.}\label{limpieza-de-los-datos.}}
+
+\hypertarget{los-datos-contienen-ceros-o-elementos-vacuxedos-gestiona-cada-uno-de-estos-casos.}{%
+\subsection{3.1. ¿Los datos contienen ceros o elementos vacíos? Gestiona
+cada uno de estos
+casos.}\label{los-datos-contienen-ceros-o-elementos-vacuxedos-gestiona-cada-uno-de-estos-casos.}}
+
+Un paso esencial será la limpieza de datos, mirando si hay valores
+vacíos o nulos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colSums}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(df))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      age      sex       cp   trtbps     chol  restecg thalachh     exng 
+##        0        0        0        0        0        0        0        0 
+##  oldpeak      slp    thall   output 
+##        0        0        0        0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colSums}\NormalTok{(df }\SpecialCharTok{==} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      age      sex       cp   trtbps     chol  restecg thalachh     exng 
+##        0        0        0        0        0        0        0        0 
+##  oldpeak      slp    thall   output 
+##        0        0        0        0
+\end{verbatim}
+
+Vemos que no hay valores nulos en los datos ni existen campos llenos de
+espacios en blanco. Procedemos a convertir a factores las variables
+correspondientes a este tipo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{exng }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{exng)}
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{cp }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{cp)}
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{output }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{output)}
+\NormalTok{structure }\OtherTok{=} \FunctionTok{str}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    303 obs. of  12 variables:
+##  $ age     : int  63 37 41 56 57 57 56 44 52 57 ...
+##  $ sex     : int  1 1 0 1 0 1 0 1 1 1 ...
+##  $ cp      : Factor w/ 4 levels "0","1","2","3": 4 3 2 2 1 1 2 2 3 3 ...
+##  $ trtbps  : int  145 130 130 120 120 140 140 120 172 150 ...
+##  $ chol    : int  233 250 204 236 354 192 294 263 199 168 ...
+##  $ restecg : int  0 1 0 1 1 1 0 1 1 1 ...
+##  $ thalachh: int  150 187 172 178 163 148 153 173 162 174 ...
+##  $ exng    : Factor w/ 2 levels "0","1": 1 1 1 1 2 1 1 1 1 1 ...
+##  $ oldpeak : num  2.3 3.5 1.4 0.8 0.6 0.4 1.3 0 0.5 1.6 ...
+##  $ slp     : int  0 0 2 2 2 1 1 2 2 2 ...
+##  $ thall   : int  1 2 2 2 2 1 2 3 3 2 ...
+##  $ output  : Factor w/ 2 levels "0","1": 2 2 2 2 2 2 2 2 2 2 ...
+\end{verbatim}
+
+\hypertarget{identifica-y-gestiona-los-valores-extremos}{%
+\subsection{3.2. Identifica y gestiona los valores
+extremos}\label{identifica-y-gestiona-los-valores-extremos}}
+
+A continuación, analizaremos los posibles valores extremos de nuestro
+juego de datos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(df)) \{}
+ \FunctionTok{boxplot}\NormalTok{(df[, i], }\AttributeTok{main =} \FunctionTok{colnames}\NormalTok{(df)[i],}\AttributeTok{col=}\StringTok{"blue"}\NormalTok{)}
+  \FunctionTok{plot}\NormalTok{(df[, i])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{75.584-PRA2_files/figure-latex/unnamed-chunk-6-1.pdf}
+\includegraphics{75.584-PRA2_files/figure-latex/unnamed-chunk-6-2.pdf}
+\includegraphics{75.584-PRA2_files/figure-latex/unnamed-chunk-6-3.pdf}
+\includegraphics{75.584-PRA2_files/figure-latex/unnamed-chunk-6-4.pdf}
+
+\hypertarget{anuxe1lisis-de-los-datos.}{%
+\section{4. Análisis de los datos.}\label{anuxe1lisis-de-los-datos.}}
+
+\hypertarget{selecciuxf3n-de-los-grupos-de-datos-que-se-quieren-analizarcomparar-p.-ej.-si-se-van-a-comparar-grupos-de-datos-cuuxe1les-son-estos-grupos-y-quuxe9-tipo-de-anuxe1lisis-se-van-a-aplicar}{%
+\subsection{4.1. Selección de los grupos de datos que se quieren
+analizar/comparar (p.~ej., si se van a comparar grupos de datos, ¿cuáles
+son estos grupos y qué tipo de análisis se van a
+aplicar?)}\label{selecciuxf3n-de-los-grupos-de-datos-que-se-quieren-analizarcomparar-p.-ej.-si-se-van-a-comparar-grupos-de-datos-cuuxe1les-son-estos-grupos-y-quuxe9-tipo-de-anuxe1lisis-se-van-a-aplicar}}
+
+Como primer punto a analizar vamos a verificar si el nivel de colesterol
+medido en miligramos por decilitro mg/dl tiene una relacion más directa
+que la edad con la probabilidad de sufrir un ataque cardiaco que la Para
+ellos creamos un nuevo dataset con estas dos variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ df[,}\FunctionTok{names}\NormalTok{(df) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"chol"}\NormalTok{, }\StringTok{"output"}\NormalTok{,}\StringTok{"age"}\NormalTok{)]}
+\NormalTok{structure}\OtherTok{=} \FunctionTok{str}\NormalTok{(test)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    303 obs. of  3 variables:
+##  $ age   : int  63 37 41 56 57 57 56 44 52 57 ...
+##  $ chol  : int  233 250 204 236 354 192 294 263 199 168 ...
+##  $ output: Factor w/ 2 levels "0","1": 2 2 2 2 2 2 2 2 2 2 ...
+\end{verbatim}
+
+\hypertarget{comprobaciuxf3n-de-la-normalidad-y-homogeneidad-de-la-varianza.}{%
+\subsection{4.2. Comprobación de la normalidad y homogeneidad de la
+varianza.}\label{comprobaciuxf3n-de-la-normalidad-y-homogeneidad-de-la-varianza.}}
+
+En cuanto al primer dataset creado vamos a comprobar la normalidad la
+variable col
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grid.arrange}\NormalTok{((}\FunctionTok{ggdensity}\NormalTok{(test}\SpecialCharTok{$}\NormalTok{chol, }\AttributeTok{fill =} \StringTok{"lightgreen"}\NormalTok{)),}\AttributeTok{ncol=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{75.584-PRA2_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grid.arrange}\NormalTok{((}\FunctionTok{ggdensity}\NormalTok{(test}\SpecialCharTok{$}\NormalTok{age, }\AttributeTok{fill =} \StringTok{"lightgreen"}\NormalTok{)),}\AttributeTok{ncol=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{75.584-PRA2_files/figure-latex/unnamed-chunk-8-2.pdf} A
+través de un gráfico de densidad podemos ver la distribución de valores
+para la variable peso y demostrar que toma la forma de campana esperada
+que indica normalidad.
+
+\hypertarget{aplicaciuxf3n-de-pruebas-estaduxedsticas-para-comparar-los-grupos-de-datos.en-funciuxf3n-de-los-datos-y-el-objetivo-del-estudio-aplicar-pruebas-de-contraste-de-hipuxf3tesis-correlaciones-regresiones-etc.-aplicar-al-menos-tres-muxe9todos-de-anuxe1lisis-diferentes.}{%
+\subsection{4.3. Aplicación de pruebas estadísticas para comparar los
+grupos de datos.En función de los datos y el objetivo del estudio,
+aplicar pruebas de contraste de hipótesis, correlaciones, regresiones,
+etc. Aplicar al menos tres métodos de análisis
+diferentes.}\label{aplicaciuxf3n-de-pruebas-estaduxedsticas-para-comparar-los-grupos-de-datos.en-funciuxf3n-de-los-datos-y-el-objetivo-del-estudio-aplicar-pruebas-de-contraste-de-hipuxf3tesis-correlaciones-regresiones-etc.-aplicar-al-menos-tres-muxe9todos-de-anuxe1lisis-diferentes.}}
+
+Utilizamos un modelo de regresión logistica en este caso
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modeloRL }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(output }\SpecialCharTok{\textasciitilde{}}\NormalTok{ chol, }\AttributeTok{data =}\NormalTok{ test, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(modeloRL)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = output ~ chol, family = "binomial", data = test)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -1.425  -1.241   1.015   1.093   1.567  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(>|z|)  
+## (Intercept)  1.001617   0.571467   1.753   0.0797 .
+## chol        -0.003338   0.002269  -1.471   0.1412  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 417.64  on 302  degrees of freedom
+## Residual deviance: 415.43  on 301  degrees of freedom
+## AIC: 419.43
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(output }\SpecialCharTok{\textasciitilde{}}\NormalTok{ chol, test, }\AttributeTok{col =} \StringTok{"darkblue"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Modelo regresión logística"}\NormalTok{,}
+     \AttributeTok{ylab =} \StringTok{"P(output=1|colesterol)"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"colesterol"}\NormalTok{, }\AttributeTok{pch =} \StringTok{"I"}\NormalTok{)}
+
+\CommentTok{\# type = "response" devuelve las predicciones en forma de probabilidad en lugar de en log\_ODDs}
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{predict}\NormalTok{(modeloRL, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{chol =}\NormalTok{ x), }\AttributeTok{type =} \StringTok{"response"}\NormalTok{),}
+      \AttributeTok{col =} \StringTok{"firebrick"}\NormalTok{, }\AttributeTok{lwd =} \FloatTok{2.5}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{75.584-PRA2_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modeloRL }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(output }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age, }\AttributeTok{data =}\NormalTok{ test, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(modeloRL)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = output ~ age, family = "binomial", data = test)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.7125  -1.1773   0.8296   1.0685   1.5947  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)  3.03623    0.75639   4.014 5.97e-05 ***
+## age         -0.05235    0.01363  -3.841 0.000122 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 417.64  on 302  degrees of freedom
+## Residual deviance: 401.86  on 301  degrees of freedom
+## AIC: 405.86
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(output }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age, test, }\AttributeTok{col =} \StringTok{"darkblue"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Modelo regresión logística"}\NormalTok{,}
+     \AttributeTok{ylab =} \StringTok{"P(output=1|colesterol)"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"age"}\NormalTok{, }\AttributeTok{pch =} \StringTok{"I"}\NormalTok{)}
+
+\CommentTok{\# type = "response" devuelve las predicciones en forma de probabilidad en lugar de en log\_ODDs}
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{predict}\NormalTok{(modeloRL, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{age =}\NormalTok{ x), }\AttributeTok{type =} \StringTok{"response"}\NormalTok{),}
+      \AttributeTok{col =} \StringTok{"firebrick"}\NormalTok{, }\AttributeTok{lwd =} \FloatTok{2.5}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{75.584-PRA2_files/figure-latex/unnamed-chunk-10-2.pdf}
+
+\hypertarget{representaciuxf3n-de-los-resultados-a-partir-de-tablas-y-gruxe1ficas.}{%
+\section{5. Representación de los resultados a partir de tablas y
+gráficas.}\label{representaciuxf3n-de-los-resultados-a-partir-de-tablas-y-gruxe1ficas.}}
+
+Los resultados graficos se representan en los apartados anteriores.
+
+\hypertarget{resoluciuxf3n-del-problema.-a-partir-de-los-resultados-obtenidos}{%
+\section{6. Resolución del problema. A partir de los resultados
+obtenidos,}\label{resoluciuxf3n-del-problema.-a-partir-de-los-resultados-obtenidos}}
+
+\hypertarget{conclusiones}{%
+\section{Conclusiones}\label{conclusiones}}
+
+Este dataset contiene información sobre pacientes que han tenido o
+podrían tener ataques al corazón. Los atributos incluyen la edad y el
+sexo del paciente, si el paciente ha experimentado angina inducida por
+ejercicio (exang), el número de vasos principales (ca), el tipo de dolor
+en el pecho (cp), la presión arterial en reposo (trtbps), el colesterol
+(chol), si el paciente tiene niveles elevados de azúcar en sangre en
+ayuno (fbs), los resultados electrocardiográficos en reposo (rest\_ecg),
+la frecuencia cardíaca máxima lograda (thalach), y si el paciente tiene
+más o menos probabilidades de sufrir un ataque al corazón (target). Los
+valores para los atributos incluyen información como la edad y el sexo
+del paciente, y variables categóricas como el tipo de dolor en el pecho,
+los resultados electrocardiográficos y si el paciente tiene más o menos
+probabilidades de sufrir un ataque al corazón.
+
+Revisados los datos parecen bien informados. Los datos están limpios y
+bien documentados. No plantean graves problemas de campos con valores
+nulos o vacíos y tienen bastante potencial para generar nuevos
+indicadores a partir de los datos.
+
+Pretendiamos analizar patrones y factores de riesgo relacionados con los
+ataques cardíacos, y para desarrollar modelos de predicción para
+determinar si un paciente está en riesgo de sufrir un ataque al corazón.
+
+\hypertarget{bibliografuxeda}{%
+\section{Bibliografía}\label{bibliografuxeda}}
+
+\begin{itemize}
+\tightlist
+\item
+  Calvo M, Subirats L, Pérez D (2019). \emph{Introducción a la limpieza
+  y análisis de los datos}. Editorial UOC.
+\item
+  Julià Minguillón Alfonso, Ramon Caihuelas Quiles. (2021).
+  \emph{Proceso de minería de datos}. Editorial FUOC.
+\item
+  RASHIK RAHMAN (2021). \emph{Heart Attack Analysis \& Prediction
+  Dataset}.
+  \url{https://www.kaggle.com/datasets/rashikrahmanpritom/heart-attack-analysis-prediction-dataset?resource=download\&select=heart.csv}
+\end{itemize}
+
+\end{document}
