@@ -432,6 +432,16 @@ Por otro lado, el modelo de regresión logística proporcionó resultados precis
 
 En conclusión, el análisis realizado en este dataset proporciona una comprensión valiosa sobre los factores que contribuyen al diagnóstico de un ataque cardíaco, y puede ser utilizado para desarrollar un sistema de diagnóstico automatizado o mejorar el proceso de diagnóstico actual. Sin embargo, sería recomendable realizar más investigaciones con conjuntos de datos más grandes y variados para validar estos resultados.
 
+
+Contribuciones | Firma
+---------------|------
+Investigación previa | 
+Redacción de las respuestas | 
+Desarrollo del código | 
+Participación en el vídeo | 
+
+
+
 # Bibliografía
 
 - Calvo M, Subirats L, Pérez D (2019). *Introducción a la limpieza y análisis de los datos*. Editorial UOC.
